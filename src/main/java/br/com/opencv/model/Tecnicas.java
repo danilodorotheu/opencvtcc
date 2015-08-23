@@ -132,7 +132,7 @@ public class Tecnicas {
 	 */
 	public Mat findContours(Mat matriz){
 		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-		Imgproc.findContours(matriz, contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+		Imgproc.findContours(matriz, contours, new Mat(), Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
 		Mat drawing = Mat.zeros(matriz.size(), CvType.CV_8UC3);
 		
 		Mat rand = new Mat();
@@ -140,9 +140,9 @@ public class Tecnicas {
 		
 		for( int i = 0; i < contours.size(); i++){
 			//Scalar color = new Scalar();
-			//Imgproc.drawContours(image, contours, contourIdx, color);
+			Imgproc.drawContours(drawing, contours, i, new Scalar(255, 255, 255),2);
 		}
 		
-		return matriz;
+		return drawing;
 	}
 }
