@@ -1,8 +1,14 @@
 package br.com.opencv.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.video.BackgroundSubtractorKNN;
@@ -118,5 +124,25 @@ public class Tecnicas {
 
 		return matriz;
 	}
-
+	
+	/**
+	 * 
+	 * @param matriz
+	 * @return
+	 */
+	public Mat findContours(Mat matriz){
+		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+		Imgproc.findContours(matriz, contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+		Mat drawing = Mat.zeros(matriz.size(), CvType.CV_8UC3);
+		
+		Mat rand = new Mat();
+		Core.randu(rand, 0, 255);
+		
+		for( int i = 0; i < contours.size(); i++){
+			//Scalar color = new Scalar();
+			//Imgproc.drawContours(image, contours, contourIdx, color);
+		}
+		
+		return matriz;
+	}
 }
