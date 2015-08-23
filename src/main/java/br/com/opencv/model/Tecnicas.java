@@ -42,7 +42,8 @@ public class Tecnicas {
 	// LIMIARIZACAO
 	public Mat threshold(Mat matriz) {
 		Mat matrizThreshold = new Mat();
-		Imgproc.threshold(matriz, matrizThreshold, 127, 255, Imgproc.THRESH_BINARY);
+		Imgproc.threshold(matriz, matrizThreshold, 127, 255,
+				Imgproc.THRESH_BINARY);
 		return matrizThreshold;
 	}
 
@@ -81,27 +82,47 @@ public class Tecnicas {
 	}
 
 	/**
-	 * Metodo de subtracao de Objeto na Matriz:
-	 * Utiliza o backgroundSubtractionKNN para subtrair um objeto 
-	 * em uma matriz, alem de realizar o processo de aprendizado
+	 * Metodo de subtracao de Objeto na Matriz: Utiliza o
+	 * backgroundSubtractionKNN para subtrair um objeto em uma matriz, alem de
+	 * realizar o processo de aprendizado
 	 * 
 	 * @param matriz
 	 * @return {@link Mat}
 	 * @author thiago
 	 */
 	public Mat backgroundSubtractionKNN(Mat matriz) {
-		Mat mascara = new Mat(matriz.size(), CvType.CV_8UC1);
-		bsKNN.apply(matriz, mascara);
-		Imgproc.cvtColor(mascara, matriz, Imgproc.COLOR_GRAY2BGRA, 0);
-		return morphologyEx(threshold(mascara));
+		Mat matrizBS = new Mat(matriz.size(), CvType.CV_8UC1);
+		bsKNN.apply(matriz, matrizBS, Configuracao.taxaAprendizadoKNN);
+		return matrizBS;
 	}
 
-	// SUBTRACAO DE FUNDO MOG2
+	/**
+	 * Metodo de subtracao de Objeto na Matriz: Utiliza o
+	 * backgroundSubtractionMOG2 para subtrair um objeto em uma matriz, alem de
+	 * realizar o processo de aprendizado
+	 * 
+	 * @param matriz
+	 * @return {@link Mat}
+	 * @author thiago
+	 */
 	public Mat backgroundSubtractionMOG2(Mat matriz) {
-		Mat mascara = new Mat(matriz.size(), CvType.CV_8UC1);
-		bsMOG2.apply(matriz, mascara, Configuracao.taxaAprendizadoMOG2);
-		Imgproc.cvtColor(mascara, matriz, Imgproc.COLOR_GRAY2BGRA, 0);
-		return morphologyEx(threshold(mascara));
+		Mat matrizBS = new Mat(matriz.size(), CvType.CV_8UC1);
+		bsMOG2.apply(matriz, matrizBS, Configuracao.taxaAprendizadoMOG2);
+		return matrizBS;
+	}
+
+	// CONVERSAO ESPACO CINZA PARA O ESPACO RGB
+	public Mat colorGrayToRGB(Mat matriz) {
+		Mat matrizCvtColor = new Mat();
+		Imgproc.cvtColor(matriz, matrizCvtColor, Imgproc.COLOR_GRAY2BGRA, 0);
+		return matrizCvtColor;
+	}
+
+	// CONVERSAO ESPACO RGB PARA O ESPACO CINZA
+	public Mat colorRGBToGray(Mat matriz) {
+		Mat matrizCvtColor = new Mat();
+		Imgproc.cvtColor(matriz, matrizCvtColor, Imgproc.COLOR_BGRA2GRAY, 0);
+		return matrizCvtColor;
 	}
 
 	// FILTROS MORFOLOGICOS
