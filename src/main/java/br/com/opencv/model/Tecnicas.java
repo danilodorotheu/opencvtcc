@@ -147,9 +147,12 @@ public class Tecnicas {
 	}
 	
 	/**
+	 * Recebe uma matriz e devolve o contorno dela
+	 * (Tutorial) http://opencvexamples.blogspot.com/2013/09/find-contour.html
 	 * 
 	 * @param matriz
-	 * @return
+	 * @return {@link Mat}
+	 * @author Danilo Dorotheu
 	 */
 	public Mat findContours(Mat matriz){
 		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
